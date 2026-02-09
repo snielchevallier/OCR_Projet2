@@ -1,5 +1,9 @@
 <?php require 'header.php'; ?>
-
+<div>
+    <?php if(isset($_GET['error'])): ?>
+        <p class="error">Veuillez remplir tous les champs du formulaire.</p>
+    <?php endif; ?>
+</div>
 <form action="traitement.php" method="POST">
     <div class="champ-formulaire">
         <label for="titre">Titre de l'œuvre</label>
