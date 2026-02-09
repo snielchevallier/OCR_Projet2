@@ -33,7 +33,19 @@ if(empty($_POST['image']) || !filter_var($_POST['image'], FILTER_VALIDATE_URL)){
 
 if ($formulaire_valid){
     //insere les données dans la bdd
-
+    $conn = connexion();
+    if ($conn) {
+        try {
+            $requete = $conn->prepare("INSERT INTO oeuvres (titre, description, artiste, image) VALUES (:titre, :description, :artiste, :image)");
+            $requete->bindParam(':titre', $titre);
+            $requete->bindParam(':description', $description);
+            $requete->bindParam(':artiste', $artiste);
+            $requete->bindParam(':image', $image);
+            $requete->execute();
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }   
     //redirige vers la page d'accueil avec le message de succès
     header('Location: index.php?success=1');
 }else{
