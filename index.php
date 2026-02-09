@@ -1,6 +1,19 @@
 <?php
     require 'header.php';
-    require 'oeuvres.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '\config\bdd.php';
+
+    $conn = connexion();
+    if ($conn) {
+        try {
+            $stmt = $conn->query("SELECT * FROM oeuvres");
+            $oeuvres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e) {
+            echo "Error: " . $e->getMessage();
+            $oeuvres = [];
+        }
+    } else {
+        $oeuvres = [];
+    }
 ?>
 <div id="liste-oeuvres">
     <?php foreach($oeuvres as $oeuvre): ?>
